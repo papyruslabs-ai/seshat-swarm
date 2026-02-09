@@ -11,9 +11,34 @@ A fabric of hundreds of small, identical cells — each with its own microcontro
 
 Each cell runs the same Seshat 9D behavioral catalog. The coordination math is identical to drone swarms and code translation — finite catalog selection, blast radius propagation, Δ classification.
 
-## Why Octagonal
+## The T-Piece: Universal Structural Primitive
 
-Not aesthetic. Geometric:
+The fundamental composable unit is the **T-piece** — a crossbar (fixed length) with a vertical bar (variable length). The polygon is emergent from count:
+
+```
+     crossbar end L ◄── edge ──► crossbar end R
+           ╔═════════════════════════╗
+           ║   crossbar (MCU here)   ║ ← inter-face connection
+           ╚═══════════╦════════════╝
+                       ║ vertical bar (variable length)
+                       ◉ hub connection
+```
+
+- **3 T's** → triangle (60° vertices)
+- **4 T's** → square (90° vertices)
+- **6 T's** → hexagon (120° vertices)
+- **8 T's** → octagon (135° vertices)
+- **12+** → approaches circle
+
+One printed shape builds every polygon. Two vertical bar lengths (short for squares, long for hexagons) build a **truncated octahedron** — the space-filling polyhedron with square and hexagonal faces. The angle between T-pieces is determined by geometry (count + bar length), not by actuators.
+
+4 connection points per T: 2 crossbar ends (intra-face), 1 crossbar face (inter-face/3D joint), 1 vertical tip (hub). Multiple polygons can share T-pieces at edges — 3 triangles sharing an edge (bridge truss pattern) appears as multiplicity at the inter-face connection point.
+
+See `docs/T-PIECE-9D-SPACE.md` for the complete 9D semantic space definition.
+
+## Why Octagonal (Original Design)
+
+The T-piece supersedes the original octagonal cell design but preserves its key geometric insight:
 
 ```
     ──────          4 cardinal edges → square tiling (same plane)
@@ -27,6 +52,8 @@ Not aesthetic. Geometric:
 ```
 
 An octagonal cell with 8 edges gives you both in-plane tiling (structural sheets) and cross-plane bracing (structural depth). Two layers of octagonal cells connected at their diagonals form a space frame. Space frames are among the strongest weight-bearing structures per unit mass.
+
+With the T-piece design, the same structural properties emerge from composition: 8 T-pieces form an octagon, and the inter-face connections between polygons provide the cross-plane bracing.
 
 ## How Self-Assembly Works
 
@@ -61,6 +88,7 @@ This is the same math as code translation and drone swarms:
 
 | File | Purpose |
 |------|---------|
+| `docs/T-PIECE-9D-SPACE.md` | **The 9D semantic space for T-pieces** — dimensions, catalog, examples |
 | `docs/TECH-LANDSCAPE.md` | Current state of modular robotics research |
 | `docs/SHOPPING-LIST.md` | Actual components to buy for prototyping |
 | `docs/DESIGN-NOTES.md` | Design considerations for the octagonal cell |
