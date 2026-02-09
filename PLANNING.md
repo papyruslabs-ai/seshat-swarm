@@ -679,11 +679,23 @@ Decisions that need human input before implementation. Record decisions here as 
 
 | Decision | Options | Status | Chosen | Rationale |
 |----------|---------|--------|--------|-----------|
-| Ground station language | TypeScript / Python / Rust | **Open** | — | TypeScript matches Seshat codebase. Python matches cflib/Crazyswarm2 ecosystem. |
-| Coordinator ↔ Crazyradio interface | Direct USB (cflib Python) / ROS 2 (Crazyswarm2) / Custom bridge | **Open** | — | cflib is simpler but Python-only. Crazyswarm2 is more capable but heavier. |
-| Visualization framework | Three.js (web) / Unity / Godot / ROS Rviz | **Open** | — | Three.js keeps everything in TypeScript. Unity/Godot better for VR. |
-| Catalog storage in firmware | C array in flash / JSON parsed at boot / Binary format | **Open** | — | C array is simplest and fastest (O(1) index). |
-| Position encoding in radio packets | float32 (accurate) / float16 (compact) / fixed-point (predictable) | **Open** | — | float16 gives ±65m range at ~1mm precision. Sufficient for indoor. |
+| Ground station language | TypeScript / Python / Rust | **Decided** | TypeScript | Matches Seshat codebase. Python bridge only for cflib radio layer. |
+| Coordinator ↔ Crazyradio interface | Direct USB (cflib Python) / ROS 2 (Crazyswarm2) / Custom bridge | **Decided** | cflib Python bridge | Intelligence lives in TS coordinator, not the radio layer. cflib is battle-tested. Thin Python process does only send/recv bytes. ROS 2 overhead is unnecessary because our catalog + constraint engine replaces what ROS trajectory planners do. |
+| Visualization framework | Three.js (web) / Unity / Godot / ROS Rviz | **Decided** | Three.js now, Unity later for VR | Phase 5 visualization is for debugging/demos — Three.js is perfect and stays in TS. VR operator control (Phase 6+) is a separate concern; add Unity/Godot as an add-on when needed. Don't couple visualization choice to coordinator architecture. |
+| Catalog storage in firmware | C array in flash / JSON parsed at boot / Binary format | **Decided** | C array in flash | 104 bytes/pattern, fits ~1,500 patterns in STM32 1MB flash. O(1) index by pattern_id. |
+| Position encoding in radio packets | float32 (accurate) / float16 (compact) / fixed-point (predictable) | **Decided** | int16 millimeters | ±32.767m range, 1mm precision, deterministic (no NaN edge cases unlike float16). |
+
+### Resolved Conceptual Questions
+
+These were listed as open questions in `docs/DRONE-9D-SPACE.md`. Resolved 2025-02-08.
+
+| Question | Resolution |
+|----------|------------|
+| **Is the drone catalog truly convergent?** | Yes. Phase 2 built 51 patterns covering all behavioral families and is already plateauing. Drones have fewer degrees of freedom than code (which converged at 2,571 from 108,966 entities). |
+| **How fine-grained should σ be?** | One mode per control strategy, parameterized by δ. Speed is a continuous parameter (velocity in δ), not a structural distinction. "translate-fast" vs "translate-slow" differ only in velocity value — same generator. Splitting would recreate the infinite space we're avoiding. |
+| **What's the right granularity for τ?** | Coarse for now. "solar-equipped" is sufficient — whether 10W or 30W doesn't change which σ modes are unsafe (both panels break on aggressive rolls). Charging rate differences belong in δ (energy_generation_rate). Split τ later only if two configurations have genuinely different flight envelopes. |
+| **How do we handle degraded positioning?** | Already handled by pattern preconditions. Each pattern has `position_quality_floor`. Tight formation requires 0.8+, loose hover tolerates 0.3. When quality drops, constraint engine automatically filters to looser patterns. No special mechanism needed. |
+| **Multi-swarm coordination?** | Deferred to Phase 7+. Building one swarm with 3-10 drones first. When relevant, likely: each swarm has its own coordinator, swarm-to-swarm handshake protocol (like two microservices). Not a blocking concern. |
 
 ---
 
