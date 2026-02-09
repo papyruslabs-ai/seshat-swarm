@@ -1,0 +1,61 @@
+{
+  "id": "orbit-autonomous-performer-bare.sim-gazebo",
+  "core": {
+    "sigma": "orbit",
+    "kappa": "autonomous",
+    "chi": "performer",
+    "lambda": "exclusive-volume",
+    "tau": "bare",
+    "rho": "sim-gazebo"
+  },
+  "description": "Performer drone orbiting around a center point at a configurable radius and angular velocity. Used for surveillance patterns, display choreography, and area coverage. (Sim-gazebo variant.)",
+  "preconditions": {
+    "battery_floor": 0.20,
+    "position_quality_floor": 0.5,
+    "min_references": 1,
+    "valid_from": [
+      "hover-autonomous-performer-bare.sim-gazebo",
+      "translate-autonomous-performer-bare.sim-gazebo"
+    ]
+  },
+  "postconditions": {
+    "valid_to": [
+      "hover-autonomous-performer-bare.sim-gazebo",
+      "avoid-emergency-performer-bare.sim-gazebo"
+    ],
+    "forced_exits": [
+      {
+        "condition": "battery < 0.10",
+        "target_pattern": "land-emergency-performer-bare.sim-gazebo"
+      },
+      {
+        "condition": "battery < 0.15",
+        "target_pattern": "hover-autonomous-performer-bare.sim-gazebo"
+      },
+      {
+        "condition": "position_quality < 0.3",
+        "target_pattern": "hover-emergency-performer-bare.sim-gazebo"
+      }
+    ]
+  },
+  "generator": {
+    "type": "orbit-center",
+    "defaults": {
+      "radius": 0.5,
+      "angular_vel": 0.5
+    },
+    "bounds": {
+      "radius": { "min": 0.3, "max": 1.5 },
+      "angular_vel": { "min": 0.1, "max": 1.0 }
+    }
+  },
+  "verification": {
+    "status": "unverified",
+    "collision_clearance_m": 0.3,
+    "max_velocity_ms": 1.5,
+    "max_acceleration_ms2": 2.0,
+    "energy_rate_js": 8.0,
+    "max_duration_s": 240,
+    "verified_transitions": []
+  }
+}

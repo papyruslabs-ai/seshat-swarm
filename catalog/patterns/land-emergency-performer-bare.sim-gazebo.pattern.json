@@ -1,0 +1,56 @@
+{
+  "id": "land-emergency-performer-bare.sim-gazebo",
+  "core": {
+    "sigma": "land",
+    "kappa": "emergency",
+    "chi": "performer",
+    "lambda": "exclusive-volume",
+    "tau": "bare",
+    "rho": "sim-gazebo"
+  },
+  "description": "Emergency landing. Descends immediately at the current position. Used when battery is critically low, position quality is lost, or an unrecoverable error occurs. No preconditions. (Sim-gazebo variant.)",
+  "preconditions": {
+    "battery_floor": 0.0,
+    "position_quality_floor": 0.0,
+    "min_references": 0,
+    "valid_from": [
+      "hover-autonomous-performer-bare.sim-gazebo",
+      "hover-autonomous-leader-bare.sim-gazebo",
+      "hover-autonomous-follower-bare.sim-gazebo",
+      "hover-emergency-performer-bare.sim-gazebo",
+      "translate-autonomous-performer-bare.sim-gazebo",
+      "translate-autonomous-follower-bare.sim-gazebo",
+      "translate-autonomous-leader-bare.sim-gazebo",
+      "orbit-autonomous-performer-bare.sim-gazebo",
+      "formation-hold-autonomous-performer-bare.sim-gazebo",
+      "formation-hold-autonomous-follower-bare.sim-gazebo",
+      "relay-hold-autonomous-relay-bare.sim-gazebo",
+      "avoid-emergency-performer-bare.sim-gazebo",
+      "takeoff-autonomous-performer-bare.sim-gazebo"
+    ]
+  },
+  "postconditions": {
+    "valid_to": [
+      "grounded-autonomous-reserve-bare.sim-gazebo"
+    ],
+    "forced_exits": []
+  },
+  "generator": {
+    "type": "velocity-track",
+    "defaults": {
+      "vertical_speed": -0.3
+    },
+    "bounds": {
+      "vertical_speed": { "min": -0.8, "max": -0.1 }
+    }
+  },
+  "verification": {
+    "status": "unverified",
+    "collision_clearance_m": 0.1,
+    "max_velocity_ms": 0.8,
+    "max_acceleration_ms2": 2.0,
+    "energy_rate_js": 3.0,
+    "max_duration_s": 15,
+    "verified_transitions": []
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "id": "land-autonomous-performer-bare.crazyflie-2.1",
+  "core": {
+    "sigma": "land",
+    "kappa": "autonomous",
+    "chi": "performer",
+    "lambda": "exclusive-volume",
+    "tau": "bare",
+    "rho": "crazyflie-2.1"
+  },
+  "description": "Controlled autonomous landing. Descends vertically at a safe rate to the ground. Disarms motors on touchdown. Transitions to grounded state.",
+  "preconditions": {
+    "battery_floor": 0.05,
+    "position_quality_floor": 0.3,
+    "min_references": 1,
+    "valid_from": [
+      "hover-autonomous-performer-bare.crazyflie-2.1",
+      "hover-autonomous-leader-bare.crazyflie-2.1",
+      "hover-autonomous-follower-bare.crazyflie-2.1",
+      "hover-autonomous-relay-bare.crazyflie-2.1",
+      "hover-autonomous-anchor-bare.crazyflie-2.1",
+      "hover-autonomous-reserve-bare.crazyflie-2.1",
+      "hover-operator-guided-performer-bare.crazyflie-2.1",
+      "hover-emergency-performer-bare.crazyflie-2.1"
+    ]
+  },
+  "postconditions": {
+    "valid_to": [
+      "grounded-autonomous-reserve-bare.crazyflie-2.1"
+    ],
+    "forced_exits": [
+      {
+        "condition": "battery < 0.03",
+        "target_pattern": "land-emergency-performer-bare.crazyflie-2.1"
+      }
+    ]
+  },
+  "generator": {
+    "type": "velocity-track",
+    "defaults": {
+      "vertical_speed": -0.2,
+      "target_altitude": 0.0
+    },
+    "bounds": {
+      "vertical_speed": { "min": -0.5, "max": -0.05 },
+      "target_altitude": { "min": 0.0, "max": 0.0 }
+    }
+  },
+  "verification": {
+    "status": "unverified",
+    "collision_clearance_m": 0.3,
+    "max_velocity_ms": 0.5,
+    "max_acceleration_ms2": 0.8,
+    "energy_rate_js": 4.0,
+    "max_duration_s": 30,
+    "verified_transitions": []
+  }
+}

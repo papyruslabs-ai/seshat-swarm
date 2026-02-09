@@ -1,0 +1,59 @@
+{
+  "id": "translate-autonomous-charger-inbound-bare.crazyflie-2.1",
+  "core": {
+    "sigma": "translate",
+    "kappa": "autonomous",
+    "chi": "charger-inbound",
+    "lambda": "shared-corridor",
+    "tau": "bare",
+    "rho": "crazyflie-2.1"
+  },
+  "description": "Drone translating toward the charging station. Activated when battery falls below threshold. Follows a pre-planned corridor to the charging pad approach point.",
+  "preconditions": {
+    "battery_floor": 0.08,
+    "position_quality_floor": 0.4,
+    "min_references": 1,
+    "valid_from": [
+      "hover-autonomous-performer-bare.crazyflie-2.1",
+      "hover-autonomous-follower-bare.crazyflie-2.1",
+      "hover-autonomous-relay-bare.crazyflie-2.1",
+      "hover-autonomous-reserve-bare.crazyflie-2.1",
+      "hover-autonomous-charger-inbound-bare.crazyflie-2.1"
+    ]
+  },
+  "postconditions": {
+    "valid_to": [
+      "hover-autonomous-charger-inbound-bare.crazyflie-2.1",
+      "dock-autonomous-charger-inbound-bare.crazyflie-2.1",
+      "avoid-emergency-performer-bare.crazyflie-2.1"
+    ],
+    "forced_exits": [
+      {
+        "condition": "battery < 0.05",
+        "target_pattern": "land-emergency-performer-bare.crazyflie-2.1"
+      },
+      {
+        "condition": "position_quality < 0.2",
+        "target_pattern": "land-emergency-performer-bare.crazyflie-2.1"
+      }
+    ]
+  },
+  "generator": {
+    "type": "velocity-track",
+    "defaults": {
+      "max_speed": 0.4
+    },
+    "bounds": {
+      "max_speed": { "min": 0.1, "max": 0.6 }
+    }
+  },
+  "verification": {
+    "status": "unverified",
+    "collision_clearance_m": 0.3,
+    "max_velocity_ms": 0.6,
+    "max_acceleration_ms2": 1.0,
+    "energy_rate_js": 6.5,
+    "max_duration_s": 120,
+    "verified_transitions": []
+  }
+}

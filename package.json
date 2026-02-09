@@ -1,0 +1,22 @@
+{
+  "name": "seshat-swarm",
+  "version": "0.1.0",
+  "description": "Drone swarm coordination through finite behavioral catalog selection",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "validate": "npx tsx scripts/validate-catalog.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.2",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "private": true
+}

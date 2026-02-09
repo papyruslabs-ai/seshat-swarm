@@ -1,0 +1,54 @@
+{
+  "id": "relay-hold-autonomous-relay-bare.sim-gazebo",
+  "core": {
+    "sigma": "relay-hold",
+    "kappa": "autonomous",
+    "chi": "relay",
+    "lambda": "comm-bridge",
+    "tau": "bare",
+    "rho": "sim-gazebo"
+  },
+  "description": "Relay drone holding at an optimal communication bridge position. Positioned to maximize signal coverage between distant swarm members and the ground station. Stationary with active comm forwarding. (Sim-gazebo variant.)",
+  "preconditions": {
+    "battery_floor": 0.20,
+    "position_quality_floor": 0.5,
+    "min_references": 1,
+    "valid_from": [
+      "hover-autonomous-performer-bare.sim-gazebo"
+    ]
+  },
+  "postconditions": {
+    "valid_to": [
+      "hover-autonomous-performer-bare.sim-gazebo",
+      "avoid-emergency-performer-bare.sim-gazebo"
+    ],
+    "forced_exits": [
+      {
+        "condition": "battery < 0.10",
+        "target_pattern": "land-emergency-performer-bare.sim-gazebo"
+      },
+      {
+        "condition": "battery < 0.20",
+        "target_pattern": "hover-autonomous-performer-bare.sim-gazebo"
+      }
+    ]
+  },
+  "generator": {
+    "type": "position-hold",
+    "defaults": {
+      "altitude": 1.5
+    },
+    "bounds": {
+      "altitude": { "min": 0.5, "max": 2.5 }
+    }
+  },
+  "verification": {
+    "status": "unverified",
+    "collision_clearance_m": 0.3,
+    "max_velocity_ms": 0.05,
+    "max_acceleration_ms2": 0.3,
+    "energy_rate_js": 5.0,
+    "max_duration_s": 420,
+    "verified_transitions": []
+  }
+}

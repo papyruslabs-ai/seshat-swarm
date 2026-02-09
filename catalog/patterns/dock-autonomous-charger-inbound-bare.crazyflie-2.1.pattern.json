@@ -1,0 +1,56 @@
+{
+  "id": "dock-autonomous-charger-inbound-bare.crazyflie-2.1",
+  "core": {
+    "sigma": "dock",
+    "kappa": "autonomous",
+    "chi": "charger-inbound",
+    "lambda": "shared-corridor",
+    "tau": "bare",
+    "rho": "crazyflie-2.1"
+  },
+  "description": "Precision docking onto the charging pad. Slow descent onto the charging contacts. Uses high-precision position control for alignment. Final approach before charging begins.",
+  "preconditions": {
+    "battery_floor": 0.03,
+    "position_quality_floor": 0.7,
+    "min_references": 2,
+    "valid_from": [
+      "translate-autonomous-charger-inbound-bare.crazyflie-2.1",
+      "hover-autonomous-charger-inbound-bare.crazyflie-2.1"
+    ]
+  },
+  "postconditions": {
+    "valid_to": [
+      "docked-autonomous-charging-bare.crazyflie-2.1"
+    ],
+    "forced_exits": [
+      {
+        "condition": "dock_alignment_failed",
+        "target_pattern": "hover-autonomous-charger-inbound-bare.crazyflie-2.1"
+      },
+      {
+        "condition": "battery < 0.02",
+        "target_pattern": "land-emergency-performer-bare.crazyflie-2.1"
+      }
+    ]
+  },
+  "generator": {
+    "type": "velocity-track",
+    "defaults": {
+      "vertical_speed": -0.05,
+      "max_horizontal_drift": 0.02
+    },
+    "bounds": {
+      "vertical_speed": { "min": -0.1, "max": -0.02 },
+      "max_horizontal_drift": { "min": 0.01, "max": 0.05 }
+    }
+  },
+  "verification": {
+    "status": "unverified",
+    "collision_clearance_m": 0.05,
+    "max_velocity_ms": 0.1,
+    "max_acceleration_ms2": 0.3,
+    "energy_rate_js": 4.0,
+    "max_duration_s": 30,
+    "verified_transitions": []
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "id": "hover-emergency-performer-bare.sim-gazebo",
+  "core": {
+    "sigma": "hover",
+    "kappa": "emergency",
+    "chi": "performer",
+    "lambda": "exclusive-volume",
+    "tau": "bare",
+    "rho": "sim-gazebo"
+  },
+  "description": "Emergency hover. Holds position after an avoidance maneuver or when conditions degrade. Stabilizes before transitioning to normal operations or emergency landing. No preconditions. (Sim-gazebo variant.)",
+  "preconditions": {
+    "battery_floor": 0.0,
+    "position_quality_floor": 0.0,
+    "min_references": 0,
+    "valid_from": [
+      "avoid-emergency-performer-bare.sim-gazebo",
+      "translate-autonomous-performer-bare.sim-gazebo",
+      "translate-autonomous-follower-bare.sim-gazebo",
+      "translate-autonomous-leader-bare.sim-gazebo",
+      "orbit-autonomous-performer-bare.sim-gazebo"
+    ]
+  },
+  "postconditions": {
+    "valid_to": [
+      "hover-autonomous-performer-bare.sim-gazebo",
+      "hover-autonomous-follower-bare.sim-gazebo",
+      "hover-autonomous-leader-bare.sim-gazebo",
+      "land-autonomous-performer-bare.sim-gazebo",
+      "land-emergency-performer-bare.sim-gazebo"
+    ],
+    "forced_exits": [
+      {
+        "condition": "battery < 0.05",
+        "target_pattern": "land-emergency-performer-bare.sim-gazebo"
+      }
+    ]
+  },
+  "generator": {
+    "type": "position-hold",
+    "defaults": {
+      "altitude": 1.0
+    },
+    "bounds": {
+      "altitude": { "min": 0.2, "max": 2.5 }
+    }
+  },
+  "verification": {
+    "status": "unverified",
+    "collision_clearance_m": 0.2,
+    "max_velocity_ms": 0.1,
+    "max_acceleration_ms2": 0.5,
+    "energy_rate_js": 5.0,
+    "max_duration_s": 60,
+    "verified_transitions": []
+  }
+}

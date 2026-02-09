@@ -1,0 +1,45 @@
+{
+  "id": "docked-autonomous-charging-bare.crazyflie-2.1",
+  "core": {
+    "sigma": "docked",
+    "kappa": "autonomous",
+    "chi": "charging",
+    "lambda": "energy-consumer",
+    "tau": "bare",
+    "rho": "crazyflie-2.1"
+  },
+  "description": "Drone is docked on the charging pad with motors disarmed. Battery is charging. Waits until battery reaches sufficient level for undocking and rejoining the swarm.",
+  "preconditions": {
+    "battery_floor": 0.0,
+    "position_quality_floor": 0.0,
+    "min_references": 0,
+    "valid_from": [
+      "dock-autonomous-charger-inbound-bare.crazyflie-2.1"
+    ]
+  },
+  "postconditions": {
+    "valid_to": [
+      "undock-autonomous-charger-outbound-bare.crazyflie-2.1"
+    ],
+    "forced_exits": [
+      {
+        "condition": "battery >= 0.90",
+        "target_pattern": "undock-autonomous-charger-outbound-bare.crazyflie-2.1"
+      }
+    ]
+  },
+  "generator": {
+    "type": "idle",
+    "defaults": {},
+    "bounds": {}
+  },
+  "verification": {
+    "status": "unverified",
+    "collision_clearance_m": 0.0,
+    "max_velocity_ms": 0.0,
+    "max_acceleration_ms2": 0.0,
+    "energy_rate_js": -2.0,
+    "max_duration_s": 3600,
+    "verified_transitions": []
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "id": "grounded-autonomous-reserve-bare.crazyflie-2.1",
+  "core": {
+    "sigma": "grounded",
+    "kappa": "autonomous",
+    "chi": "reserve",
+    "lambda": "shared-corridor",
+    "tau": "bare",
+    "rho": "crazyflie-2.1"
+  },
+  "description": "Drone is on the ground with motors disarmed. Waiting for takeoff command. Minimal power consumption. The initial state for all drones and the terminal state after landing.",
+  "preconditions": {
+    "battery_floor": 0.0,
+    "position_quality_floor": 0.0,
+    "min_references": 0,
+    "valid_from": [
+      "land-autonomous-performer-bare.crazyflie-2.1",
+      "land-emergency-performer-bare.crazyflie-2.1"
+    ]
+  },
+  "postconditions": {
+    "valid_to": [
+      "takeoff-autonomous-performer-bare.crazyflie-2.1"
+    ],
+    "forced_exits": []
+  },
+  "generator": {
+    "type": "idle",
+    "defaults": {},
+    "bounds": {}
+  },
+  "verification": {
+    "status": "unverified",
+    "collision_clearance_m": 0.0,
+    "max_velocity_ms": 0.0,
+    "max_acceleration_ms2": 0.0,
+    "energy_rate_js": 0.5,
+    "max_duration_s": 86400,
+    "verified_transitions": []
+  }
+}

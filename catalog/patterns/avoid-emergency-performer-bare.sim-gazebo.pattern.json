@@ -1,0 +1,59 @@
+{
+  "id": "avoid-emergency-performer-bare.sim-gazebo",
+  "core": {
+    "sigma": "avoid",
+    "kappa": "emergency",
+    "chi": "performer",
+    "lambda": "exclusive-volume",
+    "tau": "bare",
+    "rho": "sim-gazebo"
+  },
+  "description": "Emergency collision avoidance. Immediately stops current trajectory and moves to the nearest safe point. Overrides all other patterns. Yields its volume to the threatening drone. (Sim-gazebo variant.)",
+  "preconditions": {
+    "battery_floor": 0.0,
+    "position_quality_floor": 0.0,
+    "min_references": 0,
+    "valid_from": [
+      "hover-autonomous-performer-bare.sim-gazebo",
+      "hover-autonomous-leader-bare.sim-gazebo",
+      "hover-autonomous-follower-bare.sim-gazebo",
+      "translate-autonomous-performer-bare.sim-gazebo",
+      "translate-autonomous-follower-bare.sim-gazebo",
+      "translate-autonomous-leader-bare.sim-gazebo",
+      "orbit-autonomous-performer-bare.sim-gazebo",
+      "formation-hold-autonomous-performer-bare.sim-gazebo",
+      "formation-hold-autonomous-follower-bare.sim-gazebo",
+      "relay-hold-autonomous-relay-bare.sim-gazebo"
+    ]
+  },
+  "postconditions": {
+    "valid_to": [
+      "hover-emergency-performer-bare.sim-gazebo",
+      "land-emergency-performer-bare.sim-gazebo"
+    ],
+    "forced_exits": [
+      {
+        "condition": "battery < 0.05",
+        "target_pattern": "land-emergency-performer-bare.sim-gazebo"
+      }
+    ]
+  },
+  "generator": {
+    "type": "emergency-stop",
+    "defaults": {
+      "escape_distance": 0.5
+    },
+    "bounds": {
+      "escape_distance": { "min": 0.2, "max": 1.0 }
+    }
+  },
+  "verification": {
+    "status": "unverified",
+    "collision_clearance_m": 0.15,
+    "max_velocity_ms": 1.5,
+    "max_acceleration_ms2": 3.0,
+    "energy_rate_js": 10.0,
+    "max_duration_s": 10,
+    "verified_transitions": []
+  }
+}

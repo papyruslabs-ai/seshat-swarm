@@ -1,0 +1,57 @@
+{
+  "id": "takeoff-autonomous-performer-bare.sim-gazebo",
+  "core": {
+    "sigma": "takeoff",
+    "kappa": "autonomous",
+    "chi": "performer",
+    "lambda": "exclusive-volume",
+    "tau": "bare",
+    "rho": "sim-gazebo"
+  },
+  "description": "Autonomous takeoff sequence. Spins up motors and ascends vertically to the target hover altitude. Transitions to hover once target altitude is reached and stable. (Sim-gazebo variant.)",
+  "preconditions": {
+    "battery_floor": 0.30,
+    "position_quality_floor": 0.6,
+    "min_references": 2,
+    "valid_from": [
+      "grounded-autonomous-reserve-bare.sim-gazebo"
+    ]
+  },
+  "postconditions": {
+    "valid_to": [
+      "hover-autonomous-performer-bare.sim-gazebo",
+      "hover-autonomous-leader-bare.sim-gazebo",
+      "hover-autonomous-follower-bare.sim-gazebo"
+    ],
+    "forced_exits": [
+      {
+        "condition": "battery < 0.10",
+        "target_pattern": "land-emergency-performer-bare.sim-gazebo"
+      },
+      {
+        "condition": "position_quality < 0.3",
+        "target_pattern": "land-emergency-performer-bare.sim-gazebo"
+      }
+    ]
+  },
+  "generator": {
+    "type": "velocity-track",
+    "defaults": {
+      "vertical_speed": 0.3,
+      "target_altitude": 1.0
+    },
+    "bounds": {
+      "vertical_speed": { "min": 0.1, "max": 0.5 },
+      "target_altitude": { "min": 0.3, "max": 2.5 }
+    }
+  },
+  "verification": {
+    "status": "unverified",
+    "collision_clearance_m": 0.5,
+    "max_velocity_ms": 0.5,
+    "max_acceleration_ms2": 1.0,
+    "energy_rate_js": 8.0,
+    "max_duration_s": 15,
+    "verified_transitions": []
+  }
+}

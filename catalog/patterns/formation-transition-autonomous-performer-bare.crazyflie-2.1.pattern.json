@@ -1,0 +1,62 @@
+{
+  "id": "formation-transition-autonomous-performer-bare.crazyflie-2.1",
+  "core": {
+    "sigma": "formation-transition",
+    "kappa": "autonomous",
+    "chi": "performer",
+    "lambda": "shared-corridor",
+    "tau": "bare",
+    "rho": "crazyflie-2.1"
+  },
+  "description": "Performer drone transitioning between formation positions. Uses a trajectory spline to smoothly move from the old offset to the new offset. Active during formation reshaping.",
+  "preconditions": {
+    "battery_floor": 0.20,
+    "position_quality_floor": 0.5,
+    "min_references": 1,
+    "valid_from": [
+      "formation-hold-autonomous-performer-bare.crazyflie-2.1",
+      "hover-autonomous-performer-bare.crazyflie-2.1"
+    ]
+  },
+  "postconditions": {
+    "valid_to": [
+      "formation-hold-autonomous-performer-bare.crazyflie-2.1",
+      "hover-autonomous-performer-bare.crazyflie-2.1",
+      "avoid-emergency-performer-bare.crazyflie-2.1"
+    ],
+    "forced_exits": [
+      {
+        "condition": "battery < 0.10",
+        "target_pattern": "land-emergency-performer-bare.crazyflie-2.1"
+      },
+      {
+        "condition": "battery < 0.15",
+        "target_pattern": "hover-autonomous-performer-bare.crazyflie-2.1"
+      },
+      {
+        "condition": "position_quality < 0.3",
+        "target_pattern": "hover-emergency-performer-bare.crazyflie-2.1"
+      }
+    ]
+  },
+  "generator": {
+    "type": "trajectory-spline",
+    "defaults": {
+      "max_speed": 0.4,
+      "transition_duration_s": 3.0
+    },
+    "bounds": {
+      "max_speed": { "min": 0.1, "max": 0.8 },
+      "transition_duration_s": { "min": 1.0, "max": 10.0 }
+    }
+  },
+  "verification": {
+    "status": "unverified",
+    "collision_clearance_m": 0.25,
+    "max_velocity_ms": 0.8,
+    "max_acceleration_ms2": 1.5,
+    "energy_rate_js": 7.5,
+    "max_duration_s": 30,
+    "verified_transitions": []
+  }
+}

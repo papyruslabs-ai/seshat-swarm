@@ -1,0 +1,57 @@
+{
+  "id": "translate-autonomous-charger-outbound-bare.crazyflie-2.1",
+  "core": {
+    "sigma": "translate",
+    "kappa": "autonomous",
+    "chi": "charger-outbound",
+    "lambda": "shared-corridor",
+    "tau": "bare",
+    "rho": "crazyflie-2.1"
+  },
+  "description": "Freshly charged drone translating from the charging station back to the swarm. Follows a pre-planned corridor from the charger area to its assigned swarm position.",
+  "preconditions": {
+    "battery_floor": 0.50,
+    "position_quality_floor": 0.5,
+    "min_references": 1,
+    "valid_from": [
+      "undock-autonomous-charger-outbound-bare.crazyflie-2.1",
+      "hover-autonomous-charger-outbound-bare.crazyflie-2.1"
+    ]
+  },
+  "postconditions": {
+    "valid_to": [
+      "hover-autonomous-performer-bare.crazyflie-2.1",
+      "hover-autonomous-reserve-bare.crazyflie-2.1",
+      "hover-autonomous-charger-outbound-bare.crazyflie-2.1",
+      "avoid-emergency-performer-bare.crazyflie-2.1"
+    ],
+    "forced_exits": [
+      {
+        "condition": "battery < 0.10",
+        "target_pattern": "land-emergency-performer-bare.crazyflie-2.1"
+      },
+      {
+        "condition": "position_quality < 0.3",
+        "target_pattern": "hover-emergency-performer-bare.crazyflie-2.1"
+      }
+    ]
+  },
+  "generator": {
+    "type": "velocity-track",
+    "defaults": {
+      "max_speed": 0.4
+    },
+    "bounds": {
+      "max_speed": { "min": 0.1, "max": 0.6 }
+    }
+  },
+  "verification": {
+    "status": "unverified",
+    "collision_clearance_m": 0.3,
+    "max_velocity_ms": 0.6,
+    "max_acceleration_ms2": 1.0,
+    "energy_rate_js": 6.5,
+    "max_duration_s": 120,
+    "verified_transitions": []
+  }
+}

@@ -1,0 +1,143 @@
+[
+  {
+    "pattern_a": "dock-*",
+    "pattern_b": "dock-*",
+    "compatible": false,
+    "min_separation_m": 0,
+    "reason": "Two drones cannot dock simultaneously at same pad"
+  },
+  {
+    "pattern_a": "undock-*",
+    "pattern_b": "dock-*",
+    "compatible": false,
+    "min_separation_m": 0,
+    "reason": "Cannot dock while another is undocking"
+  },
+  {
+    "pattern_a": "*-leader-*",
+    "pattern_b": "*-leader-*",
+    "compatible": false,
+    "min_separation_m": 0,
+    "reason": "Two leaders in proximity causes conflicting follower references"
+  },
+  {
+    "pattern_a": "avoid-emergency-*",
+    "pattern_b": "*",
+    "compatible": true,
+    "min_separation_m": 1.0
+  },
+  {
+    "pattern_a": "land-emergency-*",
+    "pattern_b": "*",
+    "compatible": true,
+    "min_separation_m": 0.5
+  },
+  {
+    "pattern_a": "hover-emergency-*",
+    "pattern_b": "*",
+    "compatible": true,
+    "min_separation_m": 0.5
+  },
+  {
+    "pattern_a": "docked-*",
+    "pattern_b": "docked-*",
+    "compatible": true,
+    "min_separation_m": 0.1
+  },
+  {
+    "pattern_a": "grounded-*",
+    "pattern_b": "grounded-*",
+    "compatible": true,
+    "min_separation_m": 0.1
+  },
+  {
+    "pattern_a": "formation-hold-*",
+    "pattern_b": "formation-hold-*",
+    "compatible": true,
+    "min_separation_m": 0.25
+  },
+  {
+    "pattern_a": "hover-*",
+    "pattern_b": "hover-*",
+    "compatible": true,
+    "min_separation_m": 0.3
+  },
+  {
+    "pattern_a": "formation-transition-*",
+    "pattern_b": "formation-transition-*",
+    "compatible": true,
+    "min_separation_m": 0.4
+  },
+  {
+    "pattern_a": "translate-*",
+    "pattern_b": "translate-*",
+    "compatible": true,
+    "min_separation_m": 0.5
+  },
+  {
+    "pattern_a": "orbit-*",
+    "pattern_b": "orbit-*",
+    "compatible": true,
+    "min_separation_m": 0.5
+  },
+  {
+    "pattern_a": "relay-hold-*",
+    "pattern_b": "relay-hold-*",
+    "compatible": true,
+    "min_separation_m": 0.5
+  },
+  {
+    "pattern_a": "translate-*",
+    "pattern_b": "hover-*",
+    "compatible": true,
+    "min_separation_m": 0.5
+  },
+  {
+    "pattern_a": "orbit-*",
+    "pattern_b": "hover-*",
+    "compatible": true,
+    "min_separation_m": 0.5
+  },
+  {
+    "pattern_a": "takeoff-*",
+    "pattern_b": "*",
+    "compatible": true,
+    "min_separation_m": 0.5
+  },
+  {
+    "pattern_a": "land-*",
+    "pattern_b": "*",
+    "compatible": true,
+    "min_separation_m": 0.5
+  },
+  {
+    "pattern_a": "orbit-*",
+    "pattern_b": "translate-*",
+    "compatible": true,
+    "min_separation_m": 0.7
+  },
+  {
+    "pattern_a": "grounded-*",
+    "pattern_b": "*",
+    "compatible": true,
+    "min_separation_m": 0.3
+  },
+  {
+    "pattern_a": "docked-*",
+    "pattern_b": "*",
+    "compatible": true,
+    "min_separation_m": 0.3
+  },
+  {
+    "pattern_a": "relay-hold-*",
+    "pattern_b": "*",
+    "compatible": true,
+    "min_separation_m": 0.3
+  },
+  {
+    "pattern_a": "*",
+    "pattern_b": "*",
+    "compatible": true,
+    "min_separation_m": 0.3
+  }
+]

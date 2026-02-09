@@ -1,0 +1,71 @@
+{
+  "id": "avoid-emergency-performer-bare.crazyflie-2.1",
+  "core": {
+    "sigma": "avoid",
+    "kappa": "emergency",
+    "chi": "performer",
+    "lambda": "exclusive-volume",
+    "tau": "bare",
+    "rho": "crazyflie-2.1"
+  },
+  "description": "Emergency collision avoidance. Immediately stops current trajectory and moves to the nearest safe point. Overrides all other patterns. Yields its volume to the threatening drone.",
+  "preconditions": {
+    "battery_floor": 0.0,
+    "position_quality_floor": 0.0,
+    "min_references": 0,
+    "valid_from": [
+      "hover-autonomous-performer-bare.crazyflie-2.1",
+      "hover-autonomous-leader-bare.crazyflie-2.1",
+      "hover-autonomous-follower-bare.crazyflie-2.1",
+      "hover-autonomous-relay-bare.crazyflie-2.1",
+      "hover-autonomous-anchor-bare.crazyflie-2.1",
+      "hover-autonomous-reserve-bare.crazyflie-2.1",
+      "hover-operator-guided-performer-bare.crazyflie-2.1",
+      "translate-autonomous-performer-bare.crazyflie-2.1",
+      "translate-autonomous-follower-bare.crazyflie-2.1",
+      "translate-autonomous-leader-bare.crazyflie-2.1",
+      "translate-operator-guided-performer-bare.crazyflie-2.1",
+      "translate-autonomous-charger-inbound-bare.crazyflie-2.1",
+      "translate-autonomous-relay-bare.crazyflie-2.1",
+      "translate-autonomous-charger-outbound-bare.crazyflie-2.1",
+      "orbit-autonomous-performer-bare.crazyflie-2.1",
+      "orbit-operator-guided-performer-bare.crazyflie-2.1",
+      "orbit-autonomous-follower-bare.crazyflie-2.1",
+      "formation-hold-autonomous-performer-bare.crazyflie-2.1",
+      "formation-hold-autonomous-follower-bare.crazyflie-2.1",
+      "formation-transition-autonomous-performer-bare.crazyflie-2.1",
+      "formation-transition-autonomous-follower-bare.crazyflie-2.1",
+      "relay-hold-autonomous-relay-bare.crazyflie-2.1"
+    ]
+  },
+  "postconditions": {
+    "valid_to": [
+      "hover-emergency-performer-bare.crazyflie-2.1",
+      "land-emergency-performer-bare.crazyflie-2.1"
+    ],
+    "forced_exits": [
+      {
+        "condition": "battery < 0.05",
+        "target_pattern": "land-emergency-performer-bare.crazyflie-2.1"
+      }
+    ]
+  },
+  "generator": {
+    "type": "emergency-stop",
+    "defaults": {
+      "escape_distance": 0.5
+    },
+    "bounds": {
+      "escape_distance": { "min": 0.2, "max": 1.0 }
+    }
+  },
+  "verification": {
+    "status": "unverified",
+    "collision_clearance_m": 0.15,
+    "max_velocity_ms": 1.5,
+    "max_acceleration_ms2": 3.0,
+    "energy_rate_js": 10.0,
+    "max_duration_s": 10,
+    "verified_transitions": []
+  }
+}

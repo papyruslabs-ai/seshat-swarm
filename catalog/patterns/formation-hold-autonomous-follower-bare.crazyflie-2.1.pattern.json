@@ -1,0 +1,66 @@
+{
+  "id": "formation-hold-autonomous-follower-bare.crazyflie-2.1",
+  "core": {
+    "sigma": "formation-hold",
+    "kappa": "autonomous",
+    "chi": "follower",
+    "lambda": "shared-corridor",
+    "tau": "bare",
+    "rho": "crazyflie-2.1"
+  },
+  "description": "Follower drone holding its assigned offset within a formation. Maintains position relative to the leader drone. Corrects drift from wind or sensor noise.",
+  "preconditions": {
+    "battery_floor": 0.20,
+    "position_quality_floor": 0.5,
+    "min_references": 1,
+    "valid_from": [
+      "hover-autonomous-follower-bare.crazyflie-2.1",
+      "translate-autonomous-follower-bare.crazyflie-2.1",
+      "formation-transition-autonomous-follower-bare.crazyflie-2.1"
+    ]
+  },
+  "postconditions": {
+    "valid_to": [
+      "hover-autonomous-follower-bare.crazyflie-2.1",
+      "translate-autonomous-follower-bare.crazyflie-2.1",
+      "formation-transition-autonomous-follower-bare.crazyflie-2.1",
+      "avoid-emergency-performer-bare.crazyflie-2.1"
+    ],
+    "forced_exits": [
+      {
+        "condition": "battery < 0.10",
+        "target_pattern": "land-emergency-performer-bare.crazyflie-2.1"
+      },
+      {
+        "condition": "battery < 0.15",
+        "target_pattern": "hover-autonomous-follower-bare.crazyflie-2.1"
+      },
+      {
+        "condition": "position_quality < 0.3",
+        "target_pattern": "hover-emergency-performer-bare.crazyflie-2.1"
+      }
+    ]
+  },
+  "generator": {
+    "type": "relative-offset",
+    "defaults": {
+      "offset_x": 0,
+      "offset_y": 0,
+      "offset_z": 0
+    },
+    "bounds": {
+      "offset_x": { "min": -2, "max": 2 },
+      "offset_y": { "min": -2, "max": 2 },
+      "offset_z": { "min": -2, "max": 2 }
+    }
+  },
+  "verification": {
+    "status": "unverified",
+    "collision_clearance_m": 0.25,
+    "max_velocity_ms": 0.3,
+    "max_acceleration_ms2": 0.8,
+    "energy_rate_js": 5.5,
+    "max_duration_s": 360,
+    "verified_transitions": []
+  }
+}
